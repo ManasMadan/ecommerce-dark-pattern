@@ -20,7 +20,7 @@ Our innovative Chrome extension revolutionizes the fight against deceptive pract
 - [Flow Chart ](/docs/flowchart.png)
 - [Abstract ](/docs/abstract.pdf)
 - [Source Code ](https://github.com/ManasMadan/ecommerce-dark-pattern)
-- [Demo Video ](https://youtu.be/Yt0GpYbaa8Q)
+- [Demo Video ](https://youtu.be/Ox7cn3oY56k)
 - [ML Notebooks ](/ml_notebooks)
 
 ## Team Leader : [@ManasMadan](https://github.com/ManasMadan)
