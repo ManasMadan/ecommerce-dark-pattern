@@ -2,8 +2,9 @@ function openModal() {
   document.body.innerHTML += `
     <div class="scraper-info-modal">
         <div id="modal-content" class="modal-content">
-            <h1>Reviews Scraped:</h1>
-            <h1 id="scraper-modal-content"></h1>
+            <h1>Reviews Scraped: 
+                        <span id="scraper-modal-content"></span>
+            </h1>
         </div>
     </div>
     `;
@@ -62,7 +63,7 @@ function scrapeReview(element) {
           .getAttribute("href")
           .replace(",", " "),
       reviewTitle: element
-        .querySelector("[data-hook=review-title] span")
+        .querySelector("[data-hook=review-title]")
         ?.innerText.replace(",", " "),
       reviewMeta: element
         .querySelector("[data-hook=review-date]")
@@ -132,17 +133,34 @@ async function saveScrapedReviews() {
   const scrapedReviews = JSON.parse(localStorage.getItem("scrapedReviews"));
   document.getElementById("modal-content").innerHTML =
     "<h1>Analysing Reviews ...</h1>";
-  console.log(scrapedReviews);
 
   const response = await fetch("http://127.0.0.1:5000/analyze-reviews", {
     method: "POST",
-    body: JSON.stringify({ reviews: scrapedReviews.map((r) => r.review) }),
+    body: JSON.stringify({ reviews: scrapedReviews }),
     headers: {
       "Content-Type": "application/json",
     },
   });
   const data = await response.json();
-  document.getElementById(
-    "modal-content"
-  ).innerHTML = `<div class="flex-col"><h1>Review Analysis</h1><h3>Summary</h3><div>${data.summary}</div></div>`;
+  console.log(data);
+
+  document.getElementById("modal-content").innerHTML = `
+  <div class="flex-col">
+    <h1>Review Analysis</h1>
+    <h2>Summary</h2>
+    <h3>Corrected Rating : ${data.corrected_ratings} / 5</h3>
+    <div>${data.summary}</div>
+  </div>
+  <br>
+  <h2>Reviews</h2>
+  <br>
+
+  <ul id="reviews_filtered" class="flex-col"></ul>
+  `;
+  data.filtered.forEach(
+    (review) =>
+      (document.getElementById(
+        "reviews_filtered"
+      ).innerHTML += `<li> <h4> <a href=${review.reviewLink}> ${review.reviewTitle} - ${review.reviewerName}</a> - ${review.stars} (${review.reviewMeta})</h4> <p>${review.review}</p> </li>`)
+  );
 }

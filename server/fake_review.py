@@ -13,7 +13,7 @@ model = model.load_model("catboost_model.cbm")
 def filter_reviews(reviews):
     original_reviews = []
     for review in reviews:
-        review_seq = tokenizer.texts_to_sequences([review])
+        review_seq = tokenizer.texts_to_sequences([review["review"]])
         review_padded = pad_sequences(review_seq, maxlen=521)
         predicted_prob = model.predict(review_padded)
         

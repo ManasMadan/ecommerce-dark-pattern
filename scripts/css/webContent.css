@@ -18,12 +18,10 @@
   padding: 20px;
   border: 1px solid #888;
   width: 50%;
-}
-
-.scraper-info-modal .modal-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  z-index: 999;
+  max-height: 400px;
+  overflow: scroll;
 }
 
 .flex-col {
